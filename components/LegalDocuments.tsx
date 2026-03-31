@@ -9,7 +9,15 @@ import { legalData } from '../constants/legalData';
 type AppKey = 'imu' | 'vision';
 
 const LegalDocuments: React.FC = () => {
-  const [activeApp, setActiveApp] = useState<AppKey>('imu');
+  const getInitialApp = (): AppKey => {
+    if (typeof window === 'undefined') return 'imu';
+    const hash = window.location.hash.replace('#', '').toLowerCase();
+    if (hash === 'vision') return 'vision';
+    if (hash === 'imu') return 'imu';
+    return 'imu';
+  };
+
+  const [activeApp, setActiveApp] = useState<AppKey>(getInitialApp);
   const { language } = useLanguage();
   const copy = language === 'en'
     ? {
@@ -36,10 +44,6 @@ const LegalDocuments: React.FC = () => {
       };
 
   useEffect(() => {
-    const hash = window.location.hash.replace('#', '').toLowerCase();
-    if (hash === 'vision') setActiveApp('vision');
-    else if (hash === 'imu') setActiveApp('imu');
-
     // Reveal logic
     const observerOptions = {
       threshold: 0.1,
@@ -63,6 +67,10 @@ const LegalDocuments: React.FC = () => {
 
   const current = activeApp === 'imu' ? legalData.imu : legalData.vision;
   const logo = activeApp === 'imu' ? imuLogo : visionLogo;
+  const getSectionTitle = (section: { title: string; titleEn: string }) =>
+    language === 'en' ? section.titleEn : section.title;
+  const getSectionSubtitle = (section: { title: string; titleEn: string }) =>
+    language === 'en' ? section.title : section.titleEn;
 
   const selectApp = (app: AppKey) => {
     setActiveApp(app);
@@ -160,14 +168,14 @@ const LegalDocuments: React.FC = () => {
                 onClick={() => jumpToSection(section.id)}
                 className="shrink-0 rounded-full px-6 py-2.5 text-xs font-black uppercase tracking-widest text-slate-600 transition hover:bg-brand-blue hover:text-white"
               >
-                {section.title}
+                {getSectionTitle(section)}
               </button>
             ))}
           </div>
         </section>
 
         {/* Main Content Areas */}
-        <main className="mt-16 space-y-20">
+        <main id={activeApp} className="mt-16 space-y-20">
           {current.sections.map((section, sIdx) => (
             <section
               key={section.id}
@@ -177,10 +185,10 @@ const LegalDocuments: React.FC = () => {
             >
               <div className="flex flex-col border-b-2 border-slate-100 pb-2">
                 <h2 className="text-3xl font-black tracking-tight text-slate-950 sm:text-4xl">
-                  {section.title}
+                  {getSectionTitle(section)}
                 </h2>
                 <p className="mt-2 text-xs font-black uppercase tracking-[0.3em] text-brand-blue/40 italic">
-                  {section.titleEn}
+                  {getSectionSubtitle(section)}
                 </p>
               </div>
 
