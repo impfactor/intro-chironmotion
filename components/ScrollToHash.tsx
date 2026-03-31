@@ -1,16 +1,16 @@
-import { useLayoutEffect } from 'react';
+import { useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 
 const ScrollToHash = () => {
   const { pathname, hash } = useLocation();
 
-  useLayoutEffect(() => {
+  useEffect(() => {
     if (!hash) return;
 
     const rawTargetId = hash.substring(1).toLowerCase();
     const targetId =
       rawTargetId === 'imu' || rawTargetId === 'vision'
-        ? `${rawTargetId}-terms`
+        ? rawTargetId
         : rawTargetId;
 
     let cancelled = false;
@@ -21,25 +21,17 @@ const ScrollToHash = () => {
 
       const element = document.getElementById(targetId);
       if (element) {
-        const headerOffset = 80;
-        const elementPosition = element.getBoundingClientRect().top;
-        const offsetPosition = elementPosition + window.scrollY - headerOffset;
-
-        window.scrollTo(0, 0);
-        window.scrollTo({
-          top: Math.max(offsetPosition, 0),
-          behavior: 'auto',
-        });
+        element.scrollIntoView({ behavior: 'auto', block: 'start' });
         return;
       }
 
       attempts += 1;
-      if (attempts < 30) {
-        window.requestAnimationFrame(scrollToTarget);
+      if (attempts < 90) {
+        window.setTimeout(scrollToTarget, 16);
       }
     };
 
-    window.requestAnimationFrame(scrollToTarget);
+    scrollToTarget();
 
     return () => {
       cancelled = true;

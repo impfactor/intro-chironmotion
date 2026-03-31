@@ -185,7 +185,8 @@ const LegalDocuments: React.FC = () => {
         </section>
 
         {/* Main Content Areas */}
-        <main id={activeApp} className="mt-16 space-y-20">
+        <main className="mt-16 space-y-20">
+          <div id={activeApp} className="scroll-mt-24" aria-hidden="true" />
           {current.sections.map((section, sIdx) => (
             <section
               key={section.id}

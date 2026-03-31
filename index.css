@@ -21,7 +21,7 @@
 }
 
 html {
-  scroll-behavior: smooth;
+  scroll-behavior: auto;
   scroll-padding-top: 6rem;
 }
 
@@ -90,4 +90,3 @@ video {
     box-shadow: none !important;
   }
 }
-
