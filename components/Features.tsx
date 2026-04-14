@@ -92,7 +92,10 @@ const Features: React.FC = () => {
                     <BarChart2 size={16} />
                     <span>{t.features.data.badge}</span>
                 </div>
-                <h3 className="text-3xl font-bold text-slate-900 mb-4" dangerouslySetInnerHTML={{__html: t.features.data.title}}></h3>
+                <h3 className="text-3xl font-bold text-slate-900 mb-4">
+                    <span className="block">{t.features.data.titleTop}</span>
+                    <span className="block">{t.features.data.titleBottom}</span>
+                </h3>
                 <p className="text-slate-600 mb-6 text-lg">
                     {t.features.data.desc}
                 </p>

@@ -76,7 +76,8 @@ export const translations = {
       },
       data: {
         badge: '專業級數據',
-        title: '看不見的力量，<br/>數據化呈現',
+        titleTop: '看不見的力量，',
+        titleBottom: '數據化呈現',
         desc: '提供完整的動力學曲線 (Kinetics) 與運動學角度 (Kinematics) 圖表。支援 CSV 原始數據匯出與 PDF 報告下載，滿足學術研究與專業訓練需求。',
         list: ['CSV 原始數據導出', 'PDF 專業分析報告', '動力學曲線圖表']
       }
@@ -337,7 +338,8 @@ export const translations = {
       },
       data: {
         badge: 'Professional Data',
-        title: 'Invisible Forces,<br/>Visualized',
+        titleTop: 'Invisible Forces,',
+        titleBottom: 'Visualized',
         desc: 'Provides complete Kinetics curves and Kinematics angle charts. Supports raw CSV export and PDF report downloads for academic research and professional training.',
         list: ['CSV Raw Data Export', 'PDF Professional Report', 'Kinetics Charts']
       }
